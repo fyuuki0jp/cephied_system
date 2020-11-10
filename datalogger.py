@@ -14,14 +14,17 @@ dataclass = args[2]
 raw_count = 0
 fft_count = 0
 loop = int(args[3])+1
-print("data set count ="+str(loop))
+print("data set count ="+str(loop-1))
 
 os.makedirs("./data/"+dataclass,exist_ok=True)
 with serial.Serial(args[1],115200, timeout=None) as ser:
     while True:
         line = ser.readline().decode()
         if 'serial signal' in line:
-            print('sample start')
+            if loop != int(args[3])+1:
+                print('sample start')
+            else:
+                print('dumy data sample')
             if loop >= 0:
                 loop -= 1
                 if loop == -1:
